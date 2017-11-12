@@ -6,7 +6,12 @@
           <div class="content">
             <!-- Header -->
             <div class="document-title">
-              <h1 id="home"><a href="/">YURA Research Database</a></h1>
+              <h1 id="home">
+                <a href="/listings">YURA Research Database</a>
+              </h1>
+              <h4 id="about">
+                <a href="/">About RDB</a>
+              </h4>
             </div>
             <!-- /.document-title -->
             <div>
@@ -14,84 +19,84 @@
                 <div class="row">
                   <div class="col-sm-12 col-md-6">
                     <div class="form-group">
-                      <input type="text" name="search" placeholder="Search" value="{{searchPlaceholder}}" class="form-control">
+                      <input type="text" name="search" placeholder="Search" value="{{searchPlaceholder}}" class="form-control" id="searchbox" autofocus>
                     </div>
                     <!-- /.form-group -->
                   </div>
                   <!-- /.col-* -->
 
                   <div class="col-sm-12 col-md-6">
-                    <div class="form-group">
-                      <select name="departments" class="form-control" title="Select Category">
-                                              <option value="{{deptPlaceholder}}">{{deptPlaceholder}}</option>
-                                              <optgroup label="Sciences">
-                                                {{#each depts.sciences}}
-                                                <option value='{{this}}'>{{this}}</option>
-                                                {{/each}}
-                                              </optgroup>
-                                              <optgroup label="Mathematics and Engineering">
-                                                {{#each depts.math_engineering}}
-                                                <option value='{{this}}'>{{this}}</option>
-                                                {{/each}}
-                                              </optgroup>
-                                              <optgroup label="Social Sciences">
-                                                {{#each depts.social_sciences}}
-                                                <option value='{{this}}'>{{this}}</option>
-                                                {{/each}}
-                                            </optgroup>
-                                              <optgroup label="Humanities">
-                                                {{#each depts.humanities}}
-                                                <option value='{{this}}'>{{this}}</option>
-                                                {{/each}}
-                                              </optgroup>
-                                              <optgroup label="Languages and Cultures">
-                                                {{#each depts.languages_cultures}}
-                                                <option value='{{this}}'>{{this}}</option>
-                                                {{/each}}
-                                              </optgroup>
-                                              <optgroup label="Arts and Design">
-                                                {{#each depts.arts_design}}
-                                                <option value='{{this}}'>{{this}}</option>
-                                                {{/each}}
-                                              </optgroup>
-                                              <optgroup label="Graduate and Professional Schools">
-                                                {{#each depts.graduate_professional_schools}}
-                                                <option value='{{this}}'>{{this}}</option>
-                                                {{/each}}
-                                              </optgroup>
-                                            </select>
+                    <div class="form-group" id="deptDropdown">
+                      <select name="departments" class="form-control dept-input" title="Select Category">
+                        <option value="{{deptPlaceholder}}">{{deptPlaceholder}}</option>
+                        <optgroup label="Sciences">
+                          {{#each depts.sciences}}
+                          <option value='{{this}}'>{{this}}</option>
+                          {{/each}}
+                        </optgroup>
+                        <optgroup label="Mathematics and Engineering">
+                          {{#each depts.math_engineering}}
+                          <option value='{{this}}'>{{this}}</option>
+                          {{/each}}
+                        </optgroup>
+                        <optgroup label="Social Sciences">
+                          {{#each depts.social_sciences}}
+                          <option value='{{this}}'>{{this}}</option>
+                          {{/each}}
+                      </optgroup>
+                        <optgroup label="Humanities">
+                          {{#each depts.humanities}}
+                          <option value='{{this}}'>{{this}}</option>
+                          {{/each}}
+                        </optgroup>
+                        <optgroup label="Languages and Cultures">
+                          {{#each depts.languages_cultures}}
+                          <option value='{{this}}'>{{this}}</option>
+                          {{/each}}
+                        </optgroup>
+                        <optgroup label="Arts and Design">
+                          {{#each depts.arts_design}}
+                          <option value='{{this}}'>{{this}}</option>
+                          {{/each}}
+                        </optgroup>
+                        <optgroup label="Graduate and Professional Schools">
+                          {{#each depts.graduate_professional_schools}}
+                          <option value='{{this}}'>{{this}}</option>
+                          {{/each}}
+                        </optgroup>
+                      </select>
                     </div>
                     <!-- /.form-group -->
                   </div>
-                  <!-- /.col-*
-                                    <div class="col-sm-1">
-                                        <button type="submit" class="btn btn-primary pull-right">Search</button>
-                                    </div>-->
+                  <!-- /.col-* -->
+
                 </div>
                 <!-- /.row -->
 
-                <hr>
-
-                <div class="row">
+                <div class="row" id="button-row">
                   <div class="col-sm-4">
-                    <div class="filter-actions">
-                      <a id="reset-button-id" href="/listings" class="btn"><i class="fa fa-close"></i> Reset Search</a>
-                    </div>
+                    <h2 id="resultcount">
+                      {{numberOfResults}} results from your query
+                    </h2>
                   </div>
-                  <div class="col-sm-8">
+                  <div class="col-sm-8" id="query-button-block">
+                      <button id="letsgo" type="submit" class="btn btn-primary query-buttons"><i class="fa fa-caret-right"></i> Search</button>
+                      <a id="reset-button-id" href="/listings" class="btn query-buttons"><i class="fa fa-close"></i> Clear</a>
+                      {{#if favOnly}}
+                      <button id="show-favs" type="submit" class="query-buttons"><i class="fa fa-toggle-on show-favs-turn-off"></i> Favorites only</button>
+                      {{else}}
+                      <button id="show-favs" name="favorites" value="true" type="submit" class="query-buttons"><i class="fa fa-toggle-off show-favs-turn-on"></i> Favorites only</button>
+                      {{/if}}
                   </div>
                   <!-- /.col-* -->
                 </div>
                 <!-- /.row -->
               </form>
               <!-- Listing items -->
-              <h2 id="resultcount" class="page-title">
-                {{numberOfResults}} results matching your query
-              </h2>
-              <!-- /.page-title -->
 
               <div>
                 <ul class="list">
+                  <div id="noresults">Your search didn't return any items! Make sure you spelled all words correctly, try other keywords, or try searching with the department only.</div>
                   {{#each listings}}
                     <li>
                       <div class="card-row">
@@ -99,11 +104,13 @@
                           <div class="card-row-body">
                             <h2 class="card-row-title"><a href='{{this.website}}' target="_blank">{{this.name}}</a>
                                 {{#if isfavorite}}
-                                <img src="images/star.png" alt="(favorite)" style="margin:0px;vertical-align:bottom;height:18px;width:18px"/>
+                                <img src="images/star.png" alt="(favorite)" class="star-icon" />
                                 {{/if}}
                             </h2>
                             <div class="card-row-content truncateme description">
-                              <article>{{this.description}}</article>
+                              <input type='checkbox' class='hiddentrig' id='item{{this.list_id}}'><span class='desc-text'>
+                                {{this.description}}
+                              </span><label class='show-text' for='item{{this.list_id}}'></label>
                             </div>
                             <!-- /.card-row-content -->
                           </div>
@@ -111,21 +118,26 @@
 
                           <div class="card-row-properties">
                             <dl>
-                              <dd>Department(s)</dd><dt><span>{{split-depts this.departments}}</span></dt>
+                              <dd>Department(s)</dd><dt><span class="depts-text">{{split-depts this.departments}}</span></dt>
                               <dd>Email</dd><dt><a href='mailto:{{this.email}}' target="_blank">{{this.email}}</a></dt>
-                              <dd></dd><dt><a href = '{{this.website}}' target="_blank"> Go to website <i class="fa fa-chevron-right headout-chev"></i></a></dt>
                             </dl>
-                            <dl>
-                              </br>
+                            <dl class="listing-buttons">
+                              <br/>
+
+                              {{#if this.website}}
+                                <a href='{{this.website}}' class="btn weblink-button" target="_blank">Go to website <i class="fa fa-chevron-right headout-chev"></i></a>
+                              {{/if}}
+
                               {{#if isfavorite}}
                                 <form action="/listings/removeFavorite/{{this.list_id}}" class="fav-form" method="POST">
-                                  <input type="submit" value="Remove From Favorites" class="form-control btn" id="remFav">
+                                  <input type="submit" value="Remove from Favorites" class="form-control btn remFav">
                                 </form>
                               {{else}}
                                 <form action="/listings/addFavorite/{{this.list_id}}" class="fav-form" method="POST">
-                                  <input type="submit" value="Add To Favorites" class="form-control btn" id="addFav">
+                                  <input type="submit" value="Add to Favorites" class="form-control btn addFav">
                                 </form>
                               {{/if}}
+
                             </dl>
                           </div>
                           <!-- /.card-row-properties -->
@@ -168,29 +180,29 @@
                   <div class="col-sm-12">
                     <div class="contact-info-wrapper">
                       <div class="contact-head">
-                        <h2>Got questions? Thoughts?</h2>
+                        <h2>Questions? Thoughts?</h2>
                       </div>
 
                       <div class="contact-info">
                         <span class="contact-info-item">
-                                                    <a href="/feedback" target="_self">
-                                                        <i class="fa fa-paper-plane-o"></i>
-                                                        <span style="color:#fff">Send feedback</span>
+                        <a href="/feedback" target="_self">
+                            <i class="fa fa-paper-plane-o"></i>
+                            <span>Send feedback</span>
                         </a>
                         </span>
 
                         <span class="contact-info-item">
-                                                  <a href="mailto:yura.database@gmail.com" target="_blank">
-                                                        <i class="fa fa-at"></i>
-                                                        <span style="color:#fff">yura@yale.edu</span>
+                        <a href="mailto:yura@yale.edu" target="_blank">
+                              <i class="fa fa-at"></i>
+                              <span>Email</span>
                         </a>
                         </span>
                         <!-- /.contact-info-item -->
 
                         <span class="contact-info-item">
-                                                    <a href="https://www.facebook.com/yaleundergradresearch/" target="_blank">
-                                                        <i class="fa fa-facebook"></i>
-                                                        <span style="color:#fff">Facebook</span>
+                        <a href="https://www.facebook.com/yaleundergradresearch/" target="_blank">
+                            <i class="fa fa-facebook"></i>
+                            <span>Facebook</span>
                         </a>
                         </span>
                         <!-- /.contact-info-item -->

@@ -18,26 +18,78 @@ You should have received a copy of the GNU General Public License
 along with the RDB code.  If not, see <http://www.gnu.org/licenses/>.
 --------------------------------------------------------------------------*/
 
+/* Temporary welcome banner */
+#welcome-block {
+    background: rgba(30,180,130,0.85);
+    position: fixed;
+    z-index: 999;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 40px;
+    font-size: 15px;
+    padding: 10px;
+}
+@media (max-width: 600px) {
+    #welcome-block {
+        height: 60px;
+    }
+}
+@media (max-width: 400px) {
+    #welcome-block>p {
+        font-size: 13px;
+    }
+}
+#welcome-block>p {
+    display: block;
+    line-height: 20px;
+    font-weight: bold;
+    color: #fff;
+    text-align: center;
+    margin-right: 25px;
+    margin-bottom: 0px;
+}
+#welcome-block>i {
+    margin: 5px;
+    width: 10px;
+    line-height: 10px;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    color: #fff;
+    cursor: pointer;
+}
+
 /* General layout */
 @media (max-width: 330px) {
     .hero-image-content {
-        top: 75px !important;
+        top: 10% !important;
     }
 }
 .hero-image-inner {
     box-shadow: 0 2px 8px rgba(0,0,0,0.8);
 }
+@media (max-width: 600px) {
+    .hero-image-content h1 {
+        font-size: 35px;
+    }
+}
+@media (max-height: 400px) {
+    .hero-image-content p, .hero-image-content h1 {
+        margin-bottom: 20px;
+    }
+}
 
 /* General text */
 body {
-    font-size: 18px;
+    font-size: 16px;
     background-color: #f2f2f2;
 }
 .page-wrapper {
     background-color: transparent;
 }
 p {
-    line-height: 30px;
+    line-height: 25px;
 }
 h1 {
     font-size: 34px;
@@ -65,7 +117,7 @@ h6 {
     font-size: 18px;
 }
 #maintext {
-    padding-bottom: 50px;
+    padding-bottom: 10px;
 }
 .post-info-rdb p {
     margin-top: 5px;
@@ -76,6 +128,10 @@ h6 {
         font-size: 16px;
         line-height: 1.8;
     }
+}
+.post-content a{
+    text-decoration: none;
+    border: none;
 }
 
 /* Buttons */
@@ -92,7 +148,7 @@ h6 {
 
 /* Testimonials block */
 #testimonial-page {
-    padding-top: 30px;
+    padding-top: 15px;
     padding-bottom: 30px;
 }
 #testimonials blockquote {
@@ -122,7 +178,7 @@ h6 {
 }
 @media (max-width: 500px) {
     #testimonials blockquote {
-        height: 260px;
+        height: 200px;
     }
     #testimonials footer p {
         font-size: 15px !important;
@@ -131,10 +187,17 @@ h6 {
         font-size: 12px !important;
     }
 }
+#back-top {
+    font-size: 14px;
+}
 
 /* Awesomeness block */
 #sellingblock .box-content h2, #sellingblock .box-content p {
     color: #eee;
+}
+#sellingblock {
+    padding-top: 40px;
+    padding-bottom: 40px;
 }
 /* The following 3 pieces are to adjust the responsive layout of the block
    to only expand at 992px instead of 768px width; the layout was off originally */
@@ -169,6 +232,9 @@ h6 {
 }
 
 /* FAQs block */
+#faqhead {
+    margin-top: 0px;
+}
 .faq-item {
     margin: 20px 0;
     padding: 30px;
@@ -189,7 +255,7 @@ h6 {
     content: none; /* Get rid of little box */
 }
 .faq-item-question h3 {
-    font-size: 25px;
+    font-size: 23px;
     margin: 0px;
     padding: 0px;
     color: #181818;
@@ -208,37 +274,11 @@ h6 {
     }
 }
 
-/* Back-to-top button */
-#back-top {
-    height: 60px;
-    width: 175px;
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    background-color: #2f84aa;
-    display: block;
-    z-index: 999;
-    text-align: center;
-    border-radius: 30px;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.4);
-}
-#back-top span {
-    color: #fff;
-    font-size: 18px;
-    text-align: left;
-    line-height: 60px;
-    display: inline-block;
-    margin: 0;
-    padding: 0;
-}
-#back-top i {
-    color: #fff;
-    margin: 0 10px 0 0;
-    position: relative;
-    top: -2px;
-    font-size: 15px;
-    display: inline-block;
-    -webkit-transition: all 0.2s ease;
-    -o-transition: all 0.2s ease;
-    transition: all 0.2s ease;
+/* Misc */
+#learn-more-arrow {
+    position: absolute;
+    width: 200px;
+    bottom: 5px;
+    right: 50%;
+    margin-right: -100px;
 }

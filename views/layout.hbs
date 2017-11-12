@@ -23,9 +23,7 @@ YURA Research Database (RDB)
 
 Est. 2016 by the Yale Undergraduate Research Association (YURA)
 
-Project Leader: Nicole Eskow
-Frontend Developer: Peter Wang
-Backend Developer: Surya Dutta
+Nicole Eskow ('19), Peter Wang ('18), Surya Dutta ('18), and others
 
 -->
 
@@ -33,9 +31,55 @@ Backend Developer: Surya Dutta
 
 <head>
   <meta charset="UTF-8">
+
+  <!-- Global Site Tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-63178606-7"></script>
+  {{#if userIDhash}}
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments)};
+    gtag('js', new Date());
+    gtag('config', 'UA-63178606-7', {
+      'user_id': '{{userIDhash}}',
+    });
+  </script>
+  {{else}}
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments)};
+    gtag('js', new Date());
+    gtag('config', 'UA-63178606-7');
+  </script>
+  {{/if}}
+
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
   <meta name="description=" content="The Research Database (RDB) is created by the Yale Undergraduate Research Association (YURA) as a cross-disciplinary database of Yale University research faculty with profile and research information">
+
+  <meta property="og:title" content="YURA Research Database" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="http://yura.yale.edu/database/" />
+  <meta property="og:image" content="images/RDB-image.png" />
+  <meta property="og:image:alt" content="Welcome to the Research Database (RDB) by YURA" />
+  <meta property="og:description" content="Explore Yale faculty research in a cross-disciplinary, searchable database" />
+
+  <link rel="manifest" href="public/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="images/favicon/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+
+  <title>RDB by YURA | {{title}}</title>
+
+  {{#if isAdmin}}
+  <script>
+    gtag('set', 'dimension1', 'true');
+  </script>
+  {{else}}
+  <script>
+    gtag('set', 'dimension1', 'false');
+  </script>
+  {{/if}}
+
   <link href="https://fonts.googleapis.com/css?family=Rubik" rel="stylesheet" type="text/css">
   <link href="/libraries/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
   <link href="/libraries/owl.carousel/assets/owl.carousel.css" rel="stylesheet" type="text/css">
@@ -43,8 +87,13 @@ Backend Developer: Surya Dutta
   <link href="/libraries/bootstrap-select/bootstrap-select.min.css" rel="stylesheet" type="text/css">
   <link href="/libraries/bootstrap-fileinput/fileinput.min.css" rel="stylesheet" type="text/css">
   <link href="/stylesheets/superlist-custom.css" rel="stylesheet" type="text/css">
-  <link href="/stylesheets/listingsstyle.css" rel="stylesheet" type="text/css">
   <link href="/stylesheets/generalstyle.css" rel="stylesheet" type="text/css">
+  {{#if isListings}}
+    <link href="/stylesheets/listingsstyle.css" rel="stylesheet" type="text/css">
+  {{/if}}
+  {{#if isIndex}}
+    <link href="/stylesheets/indexstyle.css" rel="stylesheet" type="text/css">
+  {{/if}}
   <link href="/stylesheets/selectize.bootstrap3.css" rel="stylesheet" type="text/css">
   <link rel="apple-touch-icon" sizes="57x57" href="images/favicon/apple-icon-57x57.png">
   <link rel="apple-touch-icon" sizes="60x60" href="images/favicon/apple-icon-60x60.png">
@@ -59,11 +108,6 @@ Backend Developer: Surya Dutta
   <link rel="icon" type="image/png" sizes="32x32" href="images/favicon/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="96x96" href="images/favicon/favicon-96x96.png">
   <link rel="icon" type="image/png" sizes="16x16" href="images/favicon/favicon-16x16.png">
-  <link rel="manifest" href="images/favicon/manifest.json">
-  <meta name="msapplication-TileColor" content="#ffffff">
-  <meta name="msapplication-TileImage" content="images/favicon/ms-icon-144x144.png">
-  <meta name="theme-color" content="#ffffff">
-  <title>RDB by YURA | {{title}}</title>
 </head>
 
 <body>
@@ -74,7 +118,7 @@ Backend Developer: Surya Dutta
         <div class="container">
           <div class="row">
             <div class="col-sm-1">
-              <img class='pull-right' src='images/Shield-White-Small.png' alt="YURA" style="height:140px;">
+              <img class='pull-right' src='images/Shield-White-Small.png' alt="YURA" id="YURA-logo" />
             </div>
             <div class="col-sm-4">
               <h2>About YURA</h2>
@@ -149,6 +193,9 @@ Backend Developer: Surya Dutta
   {{/unless}}
 
   <script src="/javascripts/jquery.min.js" type="text/javascript"></script>
+  {{#if isListings}}
+    <script src="/javascripts/listingsscript.js" type="text/javascript"></script>
+  {{/if}}
   <script src="/javascripts/bootstrap.min.js" type="text/javascript"></script>
   <script src="/libraries/bootstrap-sass/javascripts/bootstrap/collapse.js" type="text/javascript"></script>
   <script src="/libraries/bootstrap-sass/javascripts/bootstrap/carousel.js" type="text/javascript"></script>
@@ -161,18 +208,11 @@ Backend Developer: Surya Dutta
   <script src="/libraries/bootstrap-select/bootstrap-select.min.js" type="text/javascript"></script>
   <script src="/libraries/owl.carousel/owl.carousel.js" type="text/javascript"></script>
   <script src="/libraries/bootstrap-fileinput/fileinput.min.js" type="text/javascript"></script>
-  <script src="/javascripts/jquery.min.js" type="text/javascript"></script>
-  <script src="/javascripts/selectize.min.js" type="text/javascript"></script>
-  <script src="/javascripts/superlist.js" type="text/javascript"></script>
-  <script src="/javascripts/indexscript.js" type="text/javascript"></script>
-  <!--
-    <script src="/javascripts/readmore-js/readmore.js"></script>
-    <script src="/javascripts/sheetrock.min.js" type="text/javascript"></script>
-    <script src="/javascripts/list.min.js" type="text/javascript"></script>
-    <script src="/javascripts/list.pagination.min.js" type="text/javascript"></script>
-    <script src="/javascripts/listscript.js" type="text/javascript"></script>
-    <script src="/javascripts/mark.min.js" type="text/javascript"></script>
-  -->
+  {{#if isIndex}}
+    <script src="/javascripts/jquery.scrollTo.min.js" type="text/javascript"></script>
+    <script src="/javascripts/jquery.localScroll.min.js" type="text/javascript"></script>
+    <script src="/javascripts/indexscript.js" type="text/javascript"></script>
+  {{/if}}
 </body>
 
 </html>

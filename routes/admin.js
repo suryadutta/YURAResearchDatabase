@@ -3,6 +3,7 @@ var router = express.Router();
 var postgresModel = require('../models/postgres.js');
 var asyncModule = require('async')
 
+
 var userCount = 0
 var searchCount = 0
 var listingCount = 0
@@ -31,6 +32,7 @@ router.get('/admin/:page', function(req, res, next) {
       },
       function(callback) {
         res.render('admin/' + req.params.page, {
+          isAdmin: req.session.isAdmin,
           title: 'Admin Dashboard',
           hideFooter: true,
           hideArrow: true,
